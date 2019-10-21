@@ -1,0 +1,76 @@
+The Task: Implement a List with methods: reverse(), filter(),  map(), foldLeft(). Unit test coverage, production-ready code.
+
+The Solution: Immutable implementation of java.util.List<E>.
+
+Requirements: JDK 8+, Maven
+
+
+1. What are the computational complexities for the operations that you have implemented?
+
+Copy constructors - O(N)
+
+public boolean contains(Object o) - O(N)
+
+public boolean containsAll(Collection<?> c) - O(N*M)
+
+public int indexOf(Object o) - O(N)
+
+public int lastIndexOf(Object o) - O(N)
+
+public E get(int index) - O(1)
+
+public Object[] toArray() - O(N) 
+
+public <E> E[] toArray(E[] array) - O(N) 
+
+public ImmutableList<E> reverse() - O(N) 
+
+public ImmutableList<E> filter(Predicate<? super E> predicate) - O(N) 
+
+public <R> ImmutableList<R> map(Function<? super E, ? extends R> mapper) - O(N) 
+
+public E foldLeft(final BiFunction<? super E, ? super E, ? extends E> foldFunction) - O(N) 
+
+
+
+2. What guarantees does your implementation provide regarding concurrent access and modification?
+
+All methods are threas-safe.
+
+
+
+3. For a very large list how could you decompose the problem over many nodes?
+
+ImmutableList can be partitioned over few nodes. Due immutable nature most operations execution could be paralleled and distributed over nodes without synchronization overhead.
+
+
+
+Maven dependency:
+
+<dependency>
+    <groupId>com.github.dmogn</groupId>
+    <artifactId>immutablelist</artifactId>
+    <version>1.0</version>
+</dependency>
+
+
+
+Usage example:
+
+import com.github.dmogn.immutable.ImmutableList;
+
+public class ListFilter {
+    public static void main(final String[] args) {
+        final ImmutableList<Integer> array = new ImmutableList<>( Arrays.asList(97, 44, 67, 3, 22, 90, 1, 77, 98, 1078, 6, 64, 6, 79, 42) );
+        
+        // filter even
+        final ImmutableList<Integer> filteredArray = array.filter(i -> i % 2 == 0); 
+        
+        filteredArray.forEach(entry -> System.out.print(entry + " ")); // 22 90 98 1078 6 64 6 42
+    }
+}
+
+
+
+Best regards,
+Dmitry Ognyannikov
